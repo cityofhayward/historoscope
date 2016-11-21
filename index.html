@@ -10,7 +10,7 @@
 
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
-      <script src="../js/L.Map.Sync.js"></script>
+      <script src="js/L.Map.Sync.js"></script>
 
   <style>
     body { margin:0; padding:0; }
@@ -62,11 +62,13 @@
 <script>
     var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
     var leftLayer2014 = L.esri.tiledMapLayer({
-        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer"
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer",
+        maxZoom: 19
     });
 
     var leftLayer1954 = L.esri.tiledMapLayer({
-        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer"
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer",
+        maxZoom: 19
     });
 
     var leftLayer = leftLayer2014;
@@ -74,11 +76,13 @@
 
     var mapRight = L.map('map2').setView([37.67, -122.09], 15);
     var rightLayer2014 = L.esri.tiledMapLayer({
-        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer"
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer",
+        maxZoom: 19
     });
 
     var rightLayer1954 = L.esri.tiledMapLayer({
-        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer"
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer",
+        maxZoom: 19
     });
 
     var rightLayer = rightLayer1954;
@@ -113,6 +117,10 @@
 
     mapLeft.sync(mapRight);
     mapRight.sync(mapLeft);
+
+    mapLeft.on('zoomend', function () {
+        console.log(mapLeft.getZoom());
+    });
 </script>
 
 </body>
