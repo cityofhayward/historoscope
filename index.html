@@ -6,11 +6,15 @@
 
   <!-- Load Leaflet from CDN-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    
+  <link rel="stylesheet" href="css/leaflet-measure.css" />
+
   <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
 
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
       <script src="js/L.Map.Sync.js"></script>
+          <script src="js/leaflet-measure.js"></script>
 
   <style>
     body { margin:0; padding:0; }
@@ -28,7 +32,7 @@
               #basemaps-right-wrapper {
     position: absolute;
     top: 10px;
-    right: 50px;
+    left: 53%;
     z-index: 400;
     background: white;
     padding: 10px;
@@ -61,6 +65,8 @@
   </div>
 <script>
     var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
+    var measureControlLeft = new L.Control.Measure();
+    measureControlLeft.addTo(mapLeft);
     var leftLayer2014 = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer",
         maxZoom: 19
@@ -75,6 +81,8 @@
     mapLeft.addLayer(leftLayer);
 
     var mapRight = L.map('map2').setView([37.67, -122.09], 15);
+    var measureControlRight = new L.Control.Measure();
+    measureControlRight.addTo(mapRight);
     var rightLayer2014 = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer",
         maxZoom: 19
