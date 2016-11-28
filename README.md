@@ -1,12 +1,10 @@
-# README #
+### Historoscope ###
 
-This README would normally document whatever steps are necessary to get your application up and running.
+A side by side synchronized map viewer for comparing data. Options to switch data on each map
 
-### What is this repository for? ###
+### Demo ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+[See it live](Link URL)
 
 ### How do I get set up? ###
 
