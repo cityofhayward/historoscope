@@ -8,20 +8,7 @@ A side by side synchronized map viewer for comparing data. Options to switch dat
 
 ### Uses ###
 
-* [esri-leaflet](https://esri.github.io/esri-leaflet/)
 * [Leaflet](http://leafletjs.com/)
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* [Esri-Leaflet](https://esri.github.io/esri-leaflet/)
+* [Leaflet.Sync plugin](https://github.com/turban/Leaflet.Sync)
+* [Leaflet.Measure plugin](https://github.com/ljagis/leaflet-measure)
