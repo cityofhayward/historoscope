@@ -9,7 +9,7 @@ A side by side synchronized map viewer for comparing data. Options to switch dat
 ### Uses ###
 
 * [esri-leaflet](https://esri.github.io/esri-leaflet/)
-* Configuration
+* [Leaflet](http://leafletjs.com/)
 * Dependencies
 * Database configuration
 * How to run tests
