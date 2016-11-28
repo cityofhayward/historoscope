@@ -6,9 +6,9 @@ A side by side synchronized map viewer for comparing data. Options to switch dat
 
 [See it live](http://maps.hayward-ca.gov/historoscope/)
 
-### How do I get set up? ###
+### Uses ###
 
-* Summary of set up
+* [esri-leaflet](https://esri.github.io/esri-leaflet/)
 * Configuration
 * Dependencies
 * Database configuration
