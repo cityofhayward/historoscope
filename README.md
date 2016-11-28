@@ -4,7 +4,7 @@ A side by side synchronized map viewer for comparing data. Options to switch dat
 
 ### Demo ###
 
-[See it live](Link URL)
+[See it live](http://maps.hayward-ca.gov/historoscope/)
 
 ### How do I get set up? ###
 
