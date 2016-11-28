@@ -102,22 +102,18 @@
     var measureControlLeft = new L.Control.Measure();
     measureControlLeft.addTo(mapLeft);
 	
-	// Add in a crosshair for the Left map
+	// Create new crosshair for the Left map
 	var crosshairIcon = L.icon({
 		iconUrl: 'images/crosshairs.svg',
 		iconSize:     [200, 200], // size of the icon
 		iconAnchor:   [100, 100] // point of the icon which will correspond to marker's location
 	});
+
+    // Add crosshair to left map
 	crosshairL = new L.marker(mapLeft.getCenter(), {icon: crosshairIcon, clickable:false});
 	crosshairL.addTo(mapLeft);
 	
-	// Move the crosshair to the center of the map when the user pans
-	// mapLeft.on('move', function(e) {
-		// crosshairL.setLatLng(mapLeft.getCenter());
-	// });
-	
-
-	
+    //create tile layers for left map. Not sure why need to do this for left or right. Think I (Tim) had some error doing it that way
     var leftLayer2014A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer",
         maxZoom: 19
@@ -196,19 +192,8 @@
     measureControlRight.addTo(mapRight);
 	
 	// Add in a crosshair for the Right map
-	var crosshairIconR = L.icon({
-		iconUrl: 'images/crosshairs.svg',
-		iconSize:     [200, 200], // size of the icon
-		iconAnchor:   [100, 100] // point of the icon which will correspond to marker's location
-	});
-
 	crosshairR = new L.marker(mapRight.getCenter(), {icon: crosshairIcon, clickable:false});
 	crosshairR.addTo(mapRight);
-	
-	//Move the crosshair to the center of the map when the user pans
-	// mapRight.on('move', function(e) {
-		// crosshairR.setLatLng(mapRight.getCenter());
-	// });
 	
     var rightLayer2014A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_4inch/MapServer",
