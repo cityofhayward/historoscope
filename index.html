@@ -6,8 +6,8 @@
 
   <!-- Load Leaflet from CDN-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    
   <link rel="stylesheet" href="css/leaflet-measure.css" />
+  <link rel="stylesheet" href="css/l.geosearch.css" />
 
   <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
 
@@ -15,6 +15,9 @@
   <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
       <script src="js/L.Map.Sync.js"></script>
           <script src="js/leaflet-measure.js"></script>
+    		<script src="js/l.control.geosearch.js"></script>
+		<script src="js/l.geosearch.provider.google.js"></script>
+
 
   <style>
     body { margin:0; padding:0; }
@@ -101,6 +104,10 @@
     var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
     var measureControlLeft = new L.Control.Measure();
     measureControlLeft.addTo(mapLeft);
+
+    new L.Control.GeoSearch({
+	    provider: new L.GeoSearch.Provider.Google()
+	}).addTo(mapLeft);
 	
 	// Create new crosshair for the Left map
 	var crosshairIcon = L.icon({
