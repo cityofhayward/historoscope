@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
   <link rel="stylesheet" href="css/leaflet-measure.css" />
   <link rel="stylesheet" href="css/l.geosearch.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
+  <link href="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/css/header.css" rel="stylesheet">
+
   
   <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
   
@@ -20,50 +26,83 @@
     		<script src="js/l.control.geosearch.js"></script>
 		<script src="js/l.geosearch.provider.google.js"></script>
 
-
-  <style>
-    body { margin:0; padding:0; }
-    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
-      
-        #basemaps-left-wrapper {
-    position: absolute;
-    top: 10px;
-    left: 50px;
-    z-index: 400;
-    background: white;
-    padding: 10px;
-  }
-      
-              #basemaps-right-wrapper {
-    position: absolute;
-    top: 10px;
-    left: 53%;
-    z-index: 400;
-    background: white;
-    padding: 10px;
-  }
-      
-  #basemaps {
-    margin-bottom: 5px;
-  }
-      
-  @media (max-width: 781px) { 
-    #basemaps-right-wrapper {
-        left: 60%;
-    }
-  }
-  
-    @media (max-width: 781px) { 
-    #basemaps-right-wrapper {
-        left: 60%;
-    }
-  }
-      
-  </style>
 </head>
 <body>
+      <header id="site-header">
 
-  <div id="map1" style="float: left; width: 50%; height: 100%;"></div>
+    <div id="mobile-bar">
+      <div class="logo-mobile">
+        <img src="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/img/logo-hayward-white.png" alt="" />
+      </div>
+      <a href="#" class="menu-trigger mobile-trigger" style="top: 15px;"><i class="zmdi zmdi-menu"></i></a>
+    </div>
+
+    <!-- Start - Remove Entire Utility Area -->
+    <div id="top-bar">
+      <div class="liner">
+
+        <!-- Start - Remove Left Utility Area -->
+        <div class="left">
+          <div class="navigation-portal">
+            <ul class="portals menu">
+              <li><a href="http://www.hayward-ca.gov" target="_blank">Visit Hayward-ca.gov</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- End - Remove Left Utility Area -->
+
+        <!-- Start - Remove Right Utility Area -->
+        <div class="right">
+          <div class="navigation-utilities">
+            <ul class="utilities menu">
+         <!--    <li><a href="#">User Settings</a></li>
+              <li><a href="#">Website Feedback</a></li>--> 
+              <li><a href="mailto:haywardgis.s3j82@zapiermail.com?Subject=Historoscope" target="_top">Contact Hayward GIS</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- End - Remove Right Utility Area -->
+
+        <div class="clear"></div>
+
+      </div>
+    </div>
+    <!-- End - Remove Entire Utility Area -->
+
+ <div id="main-header">
+      <div class="liner">
+        <div class="logo-desktop">
+          <a href="#">
+            <img class="logo-mark" src="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/img/logo-hayward-mark.png" alt="">
+            <div class="logo-name">
+              <img class="logo-title" src="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/img/logo-hayward-text.png" alt="" />
+            </div>
+          </a>
+        </div>
+     <!--      <div class="navigation-primary">
+          <ul class="primary menu">
+            <li><a href="#">About the Explorer</a></li>
+            <li><a href="#">Using the Tool</a></li>
+            <li><a href="#">General Zoning Information</a></li>
+          </ul>
+        </div>-->
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <!-- Begin - Remove Sub Header -->
+    <div class="sub-header">
+      <div class="liner">
+        <strong>Historoscope:</strong> Browse around to investigate the development of Hayward throughout the years.
+      </div>
+    </div>
+    <!-- End - Remove Sub Header -->
+
+  </header>
+
+  <div id="sidr-right"></div>
+
+  <div id="map1" style="float: left; width: 50%; height: 100%;">
   <div id="basemaps-left-wrapper" class="leaflet-bar">
     <select name="basemaps" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
 		<option value="Streets">Streets</option>
@@ -92,8 +131,9 @@
 		
     </select>
   </div>
+      </div>
 
-  <div id="map2" style="float: left; width: 50%; height: 100%;"></div>
+  <div id="map2" style="float: left; width: 50%; height: 100%;">
   <div id="basemaps-right-wrapper" class="leaflet-bar">
     <select name="basemaps" id="basemapsRight" onChange="changeBasemap(basemapsRight)">
 		<option value="Streets">Streets</option>
@@ -122,6 +162,7 @@
 		
     </select>
   </div>
+      </div>
 <script>
     var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
     var measureControlLeft = new L.Control.Measure();
@@ -424,6 +465,35 @@
 		crosshairL.setLatLng(mapLeft.getCenter());
 		});
 </script>
+
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Activate Sidr Mobile Menu
+      $('.menu-trigger').sidr({
+        name: 'sidr-right',
+        side: 'right',
+        // renaming: false,
+        source: '.sub-header, .navigation-primary, .navigation-utilities, .navigation-portal'
+      });
+      // Close sidr menu if clicked outside {optional}
+      $(document).bind("click", function() {
+        $.sidr('close', 'sidr-right');
+      });
+
+      if ($(".sidr-inner:contains('undefined')").size()) {
+        $(".sidr-inner").each(function() {
+          if ($(this).html() === "undefined") {
+            $(this).hide();
+          }
+        });
+      }
+
+    });
+  </script>
 
 </body>
 </html>
