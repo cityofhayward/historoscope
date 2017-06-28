@@ -1,16 +1,18 @@
 <html>
 <head>
   <meta charset=utf-8 />
-  <title>Historic Topographic Maps</title>
+  <title>Hayward Historic Maps</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
   <link rel="stylesheet" href="css/leaflet-measure.css" />
   <link rel="stylesheet" href="css/l.geosearch.css" />
-
+  
   <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
-
+  
+  <script src="http://maps.hayward-ca.gov/analytics/google-analytics.js"></script>
+  
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
       <script src="js/L.Map.Sync.js"></script>
@@ -64,7 +66,8 @@
   <div id="map1" style="float: left; width: 50%; height: 100%;"></div>
   <div id="basemaps-left-wrapper" class="leaflet-bar">
     <select name="basemaps" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
-        <option value="leftLayer2014A">2014 Aerial</option>
+		<option value="Streets">Streets</option>
+        <option selected="selected" value="leftLayer2014A">2014 Aerial</option>
 		<option value="leftLayer2011A">2011 Aerial</option>
 		<option value="leftLayer2009A">2009 Aerial</option>
 		<option value="leftLayer2006A">2006 Aerial</option>
@@ -76,14 +79,24 @@
 		<option value="leftLayer1968A">1968 Aerial</option>	
 		<option value="leftLayer1966S">1966 Sanborn</option>		
 		<option value="leftLayer1961S">1961 Sanborn</option>		
-        <option value="leftLayer1954A">1954 Aerial</option>
-		<option value="Streets">Streets</option>
+        <option value="leftLayer1957S">1957 Sanborn</option>
+		<option value="leftLayer1954A">1954 Aerial</option>
+		<option value="leftLayer1953S">1953 Sanborn</option>
+		<option value="leftLayer1950S">1950 Sanborn</option>
+		<option value="leftLayer1948S">1948 Sanborn</option>
+		<option value="leftLayer1923S">1923 Sanborn</option>
+		<option value="leftLayer1907S">1907 Sanborn</option>
+		<option value="leftLayer1903S">1903 Sanborn</option>
+		<option value="leftLayer1896S">1896 Sanborn</option>
+		<option value="leftLayer1893S">1893 Sanborn</option>
+		
     </select>
   </div>
 
   <div id="map2" style="float: left; width: 50%; height: 100%;"></div>
   <div id="basemaps-right-wrapper" class="leaflet-bar">
     <select name="basemaps" id="basemapsRight" onChange="changeBasemap(basemapsRight)">
+		<option value="Streets">Streets</option>
         <option value="rightLayer2014A">2014 Aerial</option>
 		<option value="rightLayer2011A">2011 Aerial</option>
 		<option value="rightLayer2009A">2009 Aerial</option>
@@ -96,8 +109,17 @@
 		<option selected="selected" value="rightLayer1968A">1968 Aerial</option>	
 		<option value="rightLayer1966S">1966 Sanborn</option>		
 		<option value="rightLayer1961S">1961 Sanborn</option>		
-        <option value="rightLayer1954A">1954 Aerial</option>
-		<option value="Streets">Streets</option>
+        <option value="rightLayer1957S">1957 Sanborn</option>
+		<option value="rightLayer1954A">1954 Aerial</option>
+		<option value="rightLayer1953S">1953 Sanborn</option>
+		<option value="rightLayer1950S">1950 Sanborn</option>
+		<option value="rightLayer1948S">1948 Sanborn</option>
+		<option value="rightLayer1923S">1923 Sanborn</option>
+		<option value="rightLayer1907S">1907 Sanborn</option>
+		<option value="rightLayer1903S">1903 Sanborn</option>
+		<option value="rightLayer1896S">1896 Sanborn</option>
+		<option value="rightLayer1893S">1893 Sanborn</option>
+		
     </select>
   </div>
 <script>
@@ -181,16 +203,56 @@
         maxZoom: 21
     });	
 
+	    var leftLayer1957S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1957/MapServer",
+        maxZoom: 21
+    });
+
     var leftLayer1954A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer",
         maxZoom: 21
     });
 	
-	var leftLayer1966S = L.esri.tiledMapLayer({
-        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1966/MapServer",
+	var leftLayer1953S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1953/MapServer",
+        maxZoom: 21
+    });
+	
+	var leftLayer1950S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1950/MapServer",
+        maxZoom: 21
+    });
+	
+	var leftLayer1948S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1948/MapServer",
+        maxZoom: 21
+    });
+	
+	var leftLayer1923S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1923/MapServer",
         maxZoom: 21
     });
 
+	var leftLayer1907S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1907/MapServer",
+        maxZoom: 21
+    });	
+	
+	var leftLayer1903S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1903/MapServer",
+        maxZoom: 21
+    });
+	
+	var leftLayer1896S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1896/MapServer",
+        maxZoom: 21
+    });
+	
+	var leftLayer1893S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1893/MapServer",
+        maxZoom: 21
+    });
+	
     var leftLayer = leftLayer2014A;
     mapLeft.addLayer(leftLayer);
 
@@ -262,13 +324,53 @@
         maxZoom: 21
     });	
 
+	    var rightLayer1957S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1957/MapServer",
+        maxZoom: 21
+    });
+	
     var rightLayer1954A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer",
         maxZoom: 21
     });
 	
-	var rightLayer1966S = L.esri.tiledMapLayer({
-        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1966/MapServer",
+	var rightLayer1953S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1953/MapServer",
+        maxZoom: 21
+    });
+	
+	var rightLayer1950S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1950/MapServer",
+        maxZoom: 21
+    });
+	
+	var rightLayer1948S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1948/MapServer",
+        maxZoom: 21
+    });
+	
+	var rightLayer1923S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1923/MapServer",
+        maxZoom: 21
+    });
+
+	var rightLayer1907S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1907/MapServer",
+        maxZoom: 21
+    });	
+	
+	var rightLayer1903S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1903/MapServer",
+        maxZoom: 21
+    });
+	
+	var rightLayer1896S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1896/MapServer",
+        maxZoom: 21
+    });
+	
+	var rightLayer1893S = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1893/MapServer",
         maxZoom: 21
     });
 
