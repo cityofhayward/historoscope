@@ -115,6 +115,7 @@
 		<option value="leftLayer2002A">2002 Aerial</option>
 		<option value="leftLayer1999A">1999 Aerial</option>
 		<option value="leftLayer1992A">1992 Aerial</option>
+		<option value="leftLayer1985A">1985 Aerial</option>
 		<option value="leftLayer1968A">1968 Aerial</option>	
 		<option value="leftLayer1966S">1966 Sanborn</option>		
 		<option value="leftLayer1961S">1961 Sanborn</option>		
@@ -146,6 +147,7 @@
 		<option value="rightLayer2002A">2002 Aerial</option>
 		<option value="rightLayer1999A">1999 Aerial</option>
 		<option value="rightLayer1992A">1992 Aerial</option>
+		<option value="rightLayer1985A">1985 Aerial</option>
 		<option selected="selected" value="rightLayer1968A">1968 Aerial</option>	
 		<option value="rightLayer1966S">1966 Sanborn</option>		
 		<option value="rightLayer1961S">1961 Sanborn</option>		
@@ -226,6 +228,10 @@
 	
 	    var leftLayer1992A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1992_12inch/MapServer",
+        maxZoom: 21
+    });
+	    var leftLayer1985A = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1985_21inch/MapServer",
         maxZoom: 21
     });
 	
@@ -347,6 +353,10 @@
 	
 	    var rightLayer1992A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1992_12inch/MapServer",
+        maxZoom: 21
+    });
+	    var rightLayer1985A = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1985_21inch/MapServer",
         maxZoom: 21
     });
 	
