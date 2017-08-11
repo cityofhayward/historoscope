@@ -104,7 +104,7 @@
 
   <div id="map1" style="float: left; width: 50%; height: 100%;">
   <div id="basemaps-left-wrapper" class="leaflet-bar">
-    <select name="basemaps" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
+    <select name="basemaps-left" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
 		<option value="Streets">Streets</option>
         <option selected="selected" value="leftLayer2014A">2014 Aerial</option>
 		<option value="leftLayer2011A">2011 Aerial</option>
@@ -136,7 +136,7 @@
 
   <div id="map2" style="float: left; width: 50%; height: 100%;">
   <div id="basemaps-right-wrapper" class="leaflet-bar">
-    <select name="basemaps" id="basemapsRight" onChange="changeBasemap(basemapsRight)">
+    <select name="basemaps-right" id="basemapsRight" onChange="changeBasemap(basemapsRight)">
 		<option value="Streets">Streets</option>
         <option value="rightLayer2014A">2014 Aerial</option>
 		<option value="rightLayer2011A">2011 Aerial</option>
@@ -171,86 +171,86 @@
     measureControlLeft.addTo(mapLeft);
 
     new L.Control.GeoSearch({
-	    provider: new L.GeoSearch.Provider.Google()
-	}).addTo(mapLeft);
-	
-	// Create new crosshair for the Left map
-	var crosshairIcon = L.icon({
-		iconUrl: 'images/crosshairs.svg',
-		iconSize:     [200, 200], // size of the icon
-		iconAnchor:   [100, 100] // point of the icon which will correspond to marker's location
-	});
+        provider: new L.GeoSearch.Provider.Google()
+    }).addTo(mapLeft);
+
+    // Create new crosshair for the Left map
+    var crosshairIcon = L.icon({
+        iconUrl: 'images/crosshairs.svg',
+        iconSize: [200, 200], // size of the icon
+        iconAnchor: [100, 100] // point of the icon which will correspond to marker's location
+    });
 
     // Add crosshair to left map
-	crosshairL = new L.marker(mapLeft.getCenter(), {icon: crosshairIcon, clickable:false});
-	crosshairL.addTo(mapLeft);
-	
+    crosshairL = new L.marker(mapLeft.getCenter(), { icon: crosshairIcon, clickable: false });
+    crosshairL.addTo(mapLeft);
+
     //create tile layers for left map. Not sure why need to do this for left or right. Think I (Tim) had some error doing it that way
     var leftLayer2014A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_3inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer2011A = L.esri.tiledMapLayer({
+
+    var leftLayer2011A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2011_12inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer2009A = L.esri.tiledMapLayer({
+
+    var leftLayer2009A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2009_6inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer2006A = L.esri.tiledMapLayer({
+
+    var leftLayer2006A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2006_4inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer2004A = L.esri.tiledMapLayer({
+
+    var leftLayer2004A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2004_6inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer2003A = L.esri.tiledMapLayer({
+
+    var leftLayer2003A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2003_12inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer2002A = L.esri.tiledMapLayer({
+
+    var leftLayer2002A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2002_24inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer1999A = L.esri.tiledMapLayer({
+
+    var leftLayer1999A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1999_6inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer1992A = L.esri.tiledMapLayer({
+
+    var leftLayer1992A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1992_12inch/MapServer",
         maxZoom: 21
     });
-	    var leftLayer1985A = L.esri.tiledMapLayer({
+    var leftLayer1985A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1985_21inch/MapServer",
         maxZoom: 21
     });
-	
-	    var leftLayer1968A = L.esri.tiledMapLayer({
+
+    var leftLayer1968A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1968_12inch/MapServer",
         maxZoom: 21
     });
 
-	    var leftLayer1966S = L.esri.tiledMapLayer({
+    var leftLayer1966S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1966/MapServer",
         maxZoom: 21
     });
 
-	    var leftLayer1961S = L.esri.tiledMapLayer({
+    var leftLayer1961S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1961/MapServer",
         maxZoom: 21
-    });	
+    });
 
-	    var leftLayer1957S = L.esri.tiledMapLayer({
+    var leftLayer1957S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1957/MapServer",
         maxZoom: 21
     });
@@ -259,168 +259,168 @@
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer",
         maxZoom: 21
     });
-	
-	var leftLayer1953S = L.esri.tiledMapLayer({
+
+    var leftLayer1953S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1953/MapServer",
         maxZoom: 21
     });
-	
-	var leftLayer1950S = L.esri.tiledMapLayer({
+
+    var leftLayer1950S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1950/MapServer",
         maxZoom: 21
     });
-	
-	var leftLayer1948S = L.esri.tiledMapLayer({
+
+    var leftLayer1948S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1948/MapServer",
         maxZoom: 21
     });
-	
-	var leftLayer1923S = L.esri.tiledMapLayer({
+
+    var leftLayer1923S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1923/MapServer",
         maxZoom: 21
     });
 
-	var leftLayer1907S = L.esri.tiledMapLayer({
+    var leftLayer1907S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1907/MapServer",
         maxZoom: 21
-    });	
-	
-	var leftLayer1903S = L.esri.tiledMapLayer({
+    });
+
+    var leftLayer1903S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1903/MapServer",
         maxZoom: 21
     });
-	
-	var leftLayer1896S = L.esri.tiledMapLayer({
+
+    var leftLayer1896S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1896/MapServer",
         maxZoom: 21
     });
-	
-	var leftLayer1893S = L.esri.tiledMapLayer({
+
+    var leftLayer1893S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1893/MapServer",
         maxZoom: 21
     });
-	
+
     var leftLayer = leftLayer2014A;
     mapLeft.addLayer(leftLayer);
 
     var mapRight = L.map('map2').setView([37.67, -122.09], 15);
     var measureControlRight = new L.Control.Measure();
     measureControlRight.addTo(mapRight);
-	
-	// Add in a crosshair for the Right map
-	crosshairR = new L.marker(mapRight.getCenter(), {icon: crosshairIcon, clickable:false});
-	crosshairR.addTo(mapRight);
-	
+
+    // Add in a crosshair for the Right map
+    crosshairR = new L.marker(mapRight.getCenter(), { icon: crosshairIcon, clickable: false });
+    crosshairR.addTo(mapRight);
+
     var rightLayer2014A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_3inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer2011A = L.esri.tiledMapLayer({
+
+    var rightLayer2011A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2011_12inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer2009A = L.esri.tiledMapLayer({
+
+    var rightLayer2009A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2009_6inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer2006A = L.esri.tiledMapLayer({
+
+    var rightLayer2006A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2006_4inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer2004A = L.esri.tiledMapLayer({
+
+    var rightLayer2004A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2004_6inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer2003A = L.esri.tiledMapLayer({
+
+    var rightLayer2003A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2003_12inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer2002A = L.esri.tiledMapLayer({
+
+    var rightLayer2002A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2002_24inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer1999A = L.esri.tiledMapLayer({
+
+    var rightLayer1999A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1999_6inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer1992A = L.esri.tiledMapLayer({
+
+    var rightLayer1992A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1992_12inch/MapServer",
         maxZoom: 21
     });
-	    var rightLayer1985A = L.esri.tiledMapLayer({
+    var rightLayer1985A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1985_21inch/MapServer",
         maxZoom: 21
     });
-	
-	    var rightLayer1968A = L.esri.tiledMapLayer({
+
+    var rightLayer1968A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_1968_12inch/MapServer",
         maxZoom: 21
     });
 
-	    var rightLayer1966S = L.esri.tiledMapLayer({
+    var rightLayer1966S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1966/MapServer",
         maxZoom: 21
     });
 
-	    var rightLayer1961S = L.esri.tiledMapLayer({
+    var rightLayer1961S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1961/MapServer",
         maxZoom: 21
-    });	
+    });
 
-	    var rightLayer1957S = L.esri.tiledMapLayer({
+    var rightLayer1957S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1957/MapServer",
         maxZoom: 21
     });
-	
+
     var rightLayer1954A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/Aerial_Imagery_1954/MapServer",
         maxZoom: 21
     });
-	
-	var rightLayer1953S = L.esri.tiledMapLayer({
+
+    var rightLayer1953S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1953/MapServer",
         maxZoom: 21
     });
-	
-	var rightLayer1950S = L.esri.tiledMapLayer({
+
+    var rightLayer1950S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1950/MapServer",
         maxZoom: 21
     });
-	
-	var rightLayer1948S = L.esri.tiledMapLayer({
+
+    var rightLayer1948S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1948/MapServer",
         maxZoom: 21
     });
-	
-	var rightLayer1923S = L.esri.tiledMapLayer({
+
+    var rightLayer1923S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1923/MapServer",
         maxZoom: 21
     });
 
-	var rightLayer1907S = L.esri.tiledMapLayer({
+    var rightLayer1907S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1907/MapServer",
         maxZoom: 21
-    });	
-	
-	var rightLayer1903S = L.esri.tiledMapLayer({
+    });
+
+    var rightLayer1903S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1903/MapServer",
         maxZoom: 21
     });
-	
-	var rightLayer1896S = L.esri.tiledMapLayer({
+
+    var rightLayer1896S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1896/MapServer",
         maxZoom: 21
     });
-	
-	var rightLayer1893S = L.esri.tiledMapLayer({
+
+    var rightLayer1893S = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/SanbornFireInsurance_1893/MapServer",
         maxZoom: 21
     });
@@ -450,7 +450,9 @@
 
     function changeBasemap(basemaps) {
         var whichMap = basemaps.id;
+        console.log(whichMap);
         var basemap = basemaps.value;
+        console.log(basemap);
         setBasemap(basemap, whichMap);
     }
 
@@ -463,17 +465,17 @@
     mapLeft.on('zoomend', function () {
         console.log(mapLeft.getZoom());
     });
-	
-		// Move the crosshair to the center of the map when the user pans
-		mapLeft.on('move', function(e) {
-		crosshairL.setLatLng(mapLeft.getCenter());
-		crosshairR.setLatLng(mapRight.getCenter());
-		});
-		// Move the crosshair to the center of the map when the user pans
-		mapRight.on('move', function(e) {
-		crosshairR.setLatLng(mapRight.getCenter());
-		crosshairL.setLatLng(mapLeft.getCenter());
-		});
+
+    // Move the crosshair to the center of the map when the user pans
+    mapLeft.on('move', function (e) {
+        crosshairL.setLatLng(mapLeft.getCenter());
+        crosshairR.setLatLng(mapRight.getCenter());
+    });
+    // Move the crosshair to the center of the map when the user pans
+    mapRight.on('move', function (e) {
+        crosshairR.setLatLng(mapRight.getCenter());
+        crosshairL.setLatLng(mapLeft.getCenter());
+    });
 </script>
 
 
