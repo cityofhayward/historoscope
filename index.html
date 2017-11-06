@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/leaflet-measure.css" />
   <link rel="stylesheet" href="css/l.geosearch.css" />
   <link rel="stylesheet" href="css/app.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+ <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
   <link href="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/css/header.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       <div class="logo-mobile">
         <img src="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/img/logo-hayward-white.png" alt="" />
       </div>
-      <a href="#" class="menu-trigger mobile-trigger" style="top: 15px;"><i class="zmdi zmdi-menu"></i></a>
+      <a href="#" class="menu-trigger mobile-trigger"><i class="zmdi zmdi-menu"></i></a>
     </div>
 
     <!-- Start - Remove Entire Utility Area -->
@@ -103,7 +103,7 @@
 
   <div id="sidr-right"></div>
 
-  <div id="map1" style="float: left; width: 50%; height: 100%;">
+  <div id="map1" style="float: left; width: 50%;">
   <div id="basemaps-left-wrapper" class="leaflet-bar">
     <select name="basemaps-left" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
 		<option value="Streets">Streets</option>
@@ -135,7 +135,7 @@
   </div>
       </div>
 
-  <div id="map2" style="float: left; width: 50%; height: 100%;">
+  <div id="map2" style="float: left; width: 50%;">
   <div id="basemaps-right-wrapper" class="leaflet-bar">
     <select name="basemaps-right" id="basemapsRight" onChange="changeBasemap(basemapsRight)">
 		<option value="Streets">Streets</option>
@@ -449,13 +449,25 @@
         }
     }
 
-    function changeBasemap(basemaps) {
+  function changeBasemap(basemaps) {
         var whichMap = basemaps.id;
         console.log(whichMap);
+        console.log("index = " + document.getElementById('basemapsRight').value);
+        //Need to force this to set because IE doesn't recognize normal dropdown onchange events
+      //  var thisIndexToSet = document.getElementById("basemapsRight").selectedIndex;
+      //  basemaps.options[thisIndexToSet].selected = true;
+      if (whichMap === "basemapsRight") {
+          document.getElementById("basemapsLeft").focus();
+      } else {
+          document.getElementById("basemapsRight").focus();
+      }
+
+      //  document.activeElement.blur();
+        console.log(basemaps);
         var basemap = basemaps.value;
         console.log(basemap);
         setBasemap(basemap, whichMap);
-    }
+  }
 
 
     mapLeft.sync(mapRight);
@@ -471,11 +483,13 @@
     mapLeft.on('move', function (e) {
         crosshairL.setLatLng(mapLeft.getCenter());
         crosshairR.setLatLng(mapRight.getCenter());
+        document.getElementById("basemapsRight").focus();
     });
     // Move the crosshair to the center of the map when the user pans
     mapRight.on('move', function (e) {
         crosshairR.setLatLng(mapRight.getCenter());
         crosshairL.setLatLng(mapLeft.getCenter());
+        document.getElementById("basemapsLeft").focus();
     });
 </script>
 
