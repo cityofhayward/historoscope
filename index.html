@@ -6,26 +6,28 @@
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
   <link rel="stylesheet" href="css/leaflet-measure.css" />
-  <link rel="stylesheet" href="css/l.geosearch.css" />
+
   <link rel="stylesheet" href="css/app.css" />
  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
   <link href="http://maps.hayward-ca.gov/resources/templates/versatile-header/versatile-header/css/header.css" rel="stylesheet">
 
-  
-  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
-  
+
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet-src.js"></script>
+
   <script src="http://maps.hayward-ca.gov/analytics/google-analytics.js"></script>
-  
+
   <!-- Load Esri Leaflet from CDN -->
-  <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
+  <script src="https://unpkg.com/esri-leaflet@2.1.3"></script>
       <script src="js/L.Map.Sync.js"></script>
           <script src="js/leaflet-measure.js"></script>
-    		<script src="js/l.control.geosearch.js"></script>
-		<script src="js/l.geosearch.provider.google.js"></script>
+
+    <!-- Esri Leaflet Geocoder -->
+   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css">
+   <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.8"></script>
 
 </head>
 <body>
@@ -57,7 +59,7 @@
           <div class="navigation-utilities">
             <ul class="utilities menu">
          <!--    <li><a href="#">User Settings</a></li>
-              <li><a href="#">Website Feedback</a></li>--> 
+              <li><a href="#">Website Feedback</a></li>-->
               <li><a href="mailto:haywardgis.s3j82@zapiermail.com?Subject=Historoscope" target="_top">Contact Hayward GIS</a></li>
             </ul>
           </div>
@@ -117,9 +119,9 @@
 		<option value="leftLayer1999A">1999 Aerial</option>
 		<option value="leftLayer1992A">1992 Aerial</option>
 		<option value="leftLayer1985A">1985 Aerial</option>
-		<option value="leftLayer1968A">1968 Aerial</option>	
-		<option value="leftLayer1966S">1966 Sanborn</option>		
-		<option value="leftLayer1961S">1961 Sanborn</option>		
+		<option value="leftLayer1968A">1968 Aerial</option>
+		<option value="leftLayer1966S">1966 Sanborn</option>
+		<option value="leftLayer1961S">1961 Sanborn</option>
         <option value="leftLayer1957S">1957 Sanborn</option>
 		<option value="leftLayer1954A">1954 Aerial</option>
 		<option value="leftLayer1953S">1953 Sanborn</option>
@@ -130,7 +132,7 @@
 		<option value="leftLayer1903S">1903 Sanborn</option>
 		<option value="leftLayer1896S">1896 Sanborn</option>
 		<option value="leftLayer1893S">1893 Sanborn</option>
-		
+
     </select>
   </div>
       </div>
@@ -149,9 +151,9 @@
 		<option value="rightLayer1999A">1999 Aerial</option>
 		<option value="rightLayer1992A">1992 Aerial</option>
 		<option value="rightLayer1985A">1985 Aerial</option>
-		<option selected="selected" value="rightLayer1968A">1968 Aerial</option>	
-		<option value="rightLayer1966S">1966 Sanborn</option>		
-		<option value="rightLayer1961S">1961 Sanborn</option>		
+		<option selected="selected" value="rightLayer1968A">1968 Aerial</option>
+		<option value="rightLayer1966S">1966 Sanborn</option>
+		<option value="rightLayer1961S">1961 Sanborn</option>
         <option value="rightLayer1957S">1957 Sanborn</option>
 		<option value="rightLayer1954A">1954 Aerial</option>
 		<option value="rightLayer1953S">1953 Sanborn</option>
@@ -162,7 +164,7 @@
 		<option value="rightLayer1903S">1903 Sanborn</option>
 		<option value="rightLayer1896S">1896 Sanborn</option>
 		<option value="rightLayer1893S">1893 Sanborn</option>
-		
+
     </select>
   </div>
       </div>
@@ -171,9 +173,23 @@
     var measureControlLeft = new L.Control.Measure();
     measureControlLeft.addTo(mapLeft);
 
-    new L.Control.GeoSearch({
-        provider: new L.GeoSearch.Provider.Google()
-    }).addTo(mapLeft);
+  //  new L.Control.GeoSearch({
+  //      provider: new L.GeoSearch.Provider.Google()
+  //  }).addTo(mapLeft);
+
+    // create the geocoding control and add it to the map
+      var searchControl = L.esri.Geocoding.geosearch().addTo(mapLeft);
+
+      // create an empty layer group to store the results and add it to the map
+      var results = L.layerGroup().addTo(mapLeft);
+
+      // listen for the results event and add every result to the map
+      searchControl.on("results", function(data) {
+          results.clearLayers();
+          for (var i = data.results.length - 1; i >= 0; i--) {
+              results.addLayer(L.marker(data.results[i].latlng));
+          }
+      });
 
     // Create new crosshair for the Left map
     var crosshairIcon = L.icon({
@@ -495,7 +511,7 @@
 
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sidr/2.2.1/jquery.sidr.min.js"></script>
 
   <script>
     $(document).ready(function() {
