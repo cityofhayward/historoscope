@@ -22,7 +22,8 @@
 
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.1.3"></script>
-      <script src="js/L.Map.Sync.js"></script>
+    <!--     <script src="js/L.Map.Sync.js"></script>-->
+            <script src="js/L.Map.Sync2.js"></script>
           <script src="js/leaflet-measure.js"></script>
 
     <!-- Esri Leaflet Geocoder -->
@@ -109,7 +110,8 @@
   <div id="basemaps-left-wrapper" class="leaflet-bar">
     <select name="basemaps-left" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
 		<option value="Streets">Streets</option>
-        <option selected="selected" value="leftLayer2014A">2014 Aerial</option>
+    <option selected="selected" value="leftLayer2017A">2017 Aerial</option>
+    <option value="leftLayer2014A">2014 Aerial</option>
 		<option value="leftLayer2011A">2011 Aerial</option>
 		<option value="leftLayer2009A">2009 Aerial</option>
 		<option value="leftLayer2006A">2006 Aerial</option>
@@ -141,6 +143,7 @@
   <div id="basemaps-right-wrapper" class="leaflet-bar">
     <select name="basemaps-right" id="basemapsRight" onChange="changeBasemap(basemapsRight)">
 		<option value="Streets">Streets</option>
+        <option value="leftLayer2017A">2017 Aerial</option>
         <option value="rightLayer2014A">2014 Aerial</option>
 		<option value="rightLayer2011A">2011 Aerial</option>
 		<option value="rightLayer2009A">2009 Aerial</option>
@@ -148,10 +151,10 @@
 		<option value="rightLayer2004A">2004 Aerial</option>
 		<option value="rightLayer2003A">2003 Aerial</option>
 		<option value="rightLayer2002A">2002 Aerial</option>
-		<option value="rightLayer1999A">1999 Aerial</option>
+		<option selected="selected" value="rightLayer1999A">1999 Aerial</option>
 		<option value="rightLayer1992A">1992 Aerial</option>
 		<option value="rightLayer1985A">1985 Aerial</option>
-		<option selected="selected" value="rightLayer1968A">1968 Aerial</option>
+		<option value="rightLayer1968A">1968 Aerial</option>
 		<option value="rightLayer1966S">1966 Sanborn</option>
 		<option value="rightLayer1961S">1961 Sanborn</option>
         <option value="rightLayer1957S">1957 Sanborn</option>
@@ -203,6 +206,11 @@
     crosshairL.addTo(mapLeft);
 
     //create tile layers for left map. Not sure why need to do this for left or right. Think I (Tim) had some error doing it that way
+    var leftLayer2017A = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_3inch/MapServer",
+        maxZoom: 21
+    });
+
     var leftLayer2014A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_3inch/MapServer",
         maxZoom: 21
@@ -327,6 +335,11 @@
     // Add in a crosshair for the Right map
     crosshairR = new L.marker(mapRight.getCenter(), { icon: crosshairIcon, clickable: false });
     crosshairR.addTo(mapRight);
+
+    var leftLayer2017A = L.esri.tiledMapLayer({
+        url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_3inch/MapServer",
+        maxZoom: 21
+    });
 
     var rightLayer2014A = L.esri.tiledMapLayer({
         url: "http://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps/AerialPhoto_2014_3inch/MapServer",
