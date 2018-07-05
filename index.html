@@ -22,7 +22,6 @@
 
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.1.3"></script>
-    <!--     <script src="js/L.Map.Sync.js"></script>-->
             <script src="js/L.Map.Sync2.js"></script>
           <script src="js/leaflet-measure.js"></script>
 
@@ -112,7 +111,7 @@
   <div id="map1" style="float: left; width: 50%;">
   <div id="basemaps-left-wrapper" class="leaflet-bar">
     <select name="basemaps-left" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
-		<option value="Streets">Streets</option>
+<!--		<option value="Streets">Streets</option>
     <option selected="selected" value="leftLayer2017A">2017 Aerial</option>
     <option value="leftLayer2014A">2014 Aerial</option>
 		<option value="leftLayer2011A">2011 Aerial</option>
@@ -136,7 +135,7 @@
 		<option value="leftLayer1907S">1907 Sanborn</option>
 		<option value="leftLayer1903S">1903 Sanborn</option>
 		<option value="leftLayer1896S">1896 Sanborn</option>
-		<option value="leftLayer1893S">1893 Sanborn</option>
+		<option value="leftLayer1893S">1893 Sanborn</option>-->
 
     </select>
   </div>
@@ -209,6 +208,31 @@
     // Add crosshair to left map
     crosshairL = new L.marker(mapLeft.getCenter(), { icon: crosshairIcon, clickable: false });
     crosshairL.addTo(mapLeft);
+
+
+  var res2 = L.esri.get('https://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps', {},
+    function (error, response) {
+      if (error) {
+        console.log(error)
+      } else {
+      var dropdownContent = [];
+      var dropdownLeft = document.getElementById("basemapsLeft");
+      for (i=0; i<response.services.length;  i++) {
+        dropdownContent.push(response.services[i].name.split('/')[1].split('_').join(' '));
+        var thisLayer = response.services[i].name.split('/')[1].split('_').join(' ');
+        var el = document.createElement("option");
+        el.textContent = thisLayer;
+        el.value = thisLayer;
+        dropdownLeft.appendChild(el);
+      }
+      console.log(dropdownContent.length);
+    }
+  });
+  console.log(res2);
+
+//var layerList = getServiceList('https://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps');
+
+//console.log(layerList);
 
     //create tile layers for left map. Not sure why need to do this for left or right. Think I (Tim) had some error doing it that way
     var leftLayer2017A = L.esri.tiledMapLayer({
@@ -487,6 +511,7 @@
         var whichMap = basemaps.id;
         console.log(whichMap);
         console.log("index = " + document.getElementById('basemapsRight').value);
+        console.log("index = " + document.getElementById('basemapsLeft').value);
         //Need to force this to set because IE doesn't recognize normal dropdown onchange events
       //  var thisIndexToSet = document.getElementById("basemapsRight").selectedIndex;
       //  basemaps.options[thisIndexToSet].selected = true;
