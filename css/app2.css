@@ -1,0 +1,55 @@
+    body { margin:0; padding:0; }
+
+    body, html {height: 100%;}
+
+    #map1, #map2 {
+        float: left;
+        width: 50%;
+        height: 100%;
+    }
+
+  #basemapsLeft, #basemapsRight {
+    position: relative;
+    top: 10px;
+    left: 50px;
+    z-index: 4000;
+  /*  background: white; */
+    padding: 10px;
+  }
+
+  #basemaps {
+    margin-bottom: 5px;
+  }
+
+@media (max-width: 768px) {
+    #map1, #map2 {
+        top: 50px;
+        height: calc(100% - 50px);
+    }
+}
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #map1, #map2 {
+      top: 165px;
+      height: calc(100% - 165px);
+    }
+  }
+
+
+    @media (max-width: 400px) {
+        #basemaps-left-wrapper, #basemaps-right-wrapper {
+        position: absolute;
+        top: auto;
+        left: 15px;
+        bottom: 25px;
+        }
+
+     #basemapsLeft, #basemapsRight{
+        position: relative;
+        }
+
+   /*    .leaflet-top.leaflet-right {
+            top:  auto;
+            bottom:  70px;
+       }*/
+   }
