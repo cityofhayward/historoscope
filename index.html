@@ -2,29 +2,23 @@
 <html>
 <head>
   <meta charset=utf-8 />
-  <title>Hayward Historic Maps</title>
+  <title>Historoscope</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/leaflet-measure.css" />
   <link rel="stylesheet" href="css/app2.css" />
-
   <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet-src.js"></script>
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.1.3"></script>
-            <script src="js/L.Map.Sync2.js"></script>
-
-    <!-- Esri Leaflet Geocoder -->
-   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css">
-   <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.8"></script>
-
+  <script src="js/L.Map.Sync2.js"></script>
+  <script src="js/config.js"></script>
 </head>
 <script>
 
 </script>
 <body>
-<div id="sidr-right"></div>
+<div id="map-container"></div>
   <div id="map1">
     <select name="basemaps-left" id="basemapsLeft" onChange="changeBasemap(basemapsLeft)">
     </select>
@@ -38,21 +32,8 @@
 <script>
     var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
 
-    // create the geocoding control and add it to the map
-      var searchControl = L.esri.Geocoding.geosearch({
-        useMapBounds: false
-      }).addTo(mapLeft);
-
-      // create an empty layer group to store the results and add it to the map
-      var results = L.layerGroup().addTo(mapLeft);
-
-      // listen for the results event and add every result to the map
-      searchControl.on("results", function(data) {
-          results.clearLayers();
-          for (var i = data.results.length - 1; i >= 0; i--) {
-              results.addLayer(L.marker(data.results[i].latlng));
-          }
-      });
+    // create an empty layer group to store the results and add it to the map
+    var results = L.layerGroup().addTo(mapLeft);
 
     // Create new crosshair for the Left map
     var crosshairIcon = L.icon({
@@ -65,52 +46,61 @@
     crosshairL = new L.marker(mapLeft.getCenter(), { icon: crosshairIcon, clickable: false });
     crosshairL.addTo(mapLeft);
 
+// set up global variables and assign settings from config.js to the appropriate variables
   var leftLayer, rightLayer;
-  var baseURL = "https://maps.hayward-ca.gov/arcgis/rest/services/Ext_Basemaps";
-  var defaultLeftLayer = "AerialPhotoHybrid_2017";
-  var defaultRightLayer = "AerialPhoto_1968_12inch";
+  var baseURL = configFile.base_URL;
+  var defaultLeftLayer = configFile.defaultLeft;
+  var defaultRightLayer = configFile.defaultRight;
+  var renameArray = configFile.rename;
+  var excludeArray = configFile.exclude;
+  console.log(renameArray);
+  console.log(excludeArray);
 
-  var res2 = L.esri.get(baseURL, {},
+// Query arcgis rest endpoint and populate the dropdowns with different datasets from the service
+  L.esri.get(baseURL, {},
     function (error, response) {
       if (error) {
         console.log(error)
-      } else {
-      var dropdownContent = [];
-      var dropdownLeft = document.getElementById("basemapsLeft");
-        var dropdownRight = document.getElementById("basemapsRight");
-      for (i=0; i<response.services.length;  i++) {
-        console.log(response.services[i]);
-        console.log(response.services[i].name.split('/')[1]);
-        var thisLayerString = response.services[i].name.split('/')[1];
-        var thisLayerName = thisLayerString;
-        dropdownContent.push(response.services[i].name.split('/')[1].split('_').join(' '));
-        var thisDropdown = response.services[i].name.split('/')[1].split('_').join(' ');
-        var elLeft = document.createElement("option");
-        elLeft.textContent = thisDropdown;
-        elLeft.value = thisLayerString;
-        dropdownLeft.appendChild(elLeft);
-        var elRight = document.createElement("option");
-        elRight.textContent = thisDropdown;
-        elRight.value = thisLayerString;
-        dropdownRight.appendChild(elRight);
-        thisLayerName = L.esri.tiledMapLayer({
-          url: baseURL.concat('/', thisLayerString, '/MapServer'),
-          maxZoom: 21
-        });
-        if (thisLayerString == defaultLeftLayer) {
-          leftLayer = thisLayerName;
-          mapLeft.addLayer(leftLayer);
-          elLeft.selected = true;
-        }
-        if (thisLayerString == defaultRightLayer) {
-          rightLayer = thisLayerName;
-          mapRight.addLayer(rightLayer);
-          elRight.selected = true;
-        }
-        console.log(thisLayerName);
-
       }
-      console.log(dropdownContent.length);
+      else {
+        var dropdownContent = [];
+        var dropdownLeft = document.getElementById("basemapsLeft");
+        var dropdownRight = document.getElementById("basemapsRight");
+        //for to process all layers on service endpoint and push to dropdown lists
+        for (i=0; i<response.services.length;  i++) {
+        //  console.log(response.services[i]);
+        //  console.log(response.services[i].name.split('/')[1]);
+        //  var thisLayerString = renameItem(response.services[i].name.split('/')[1]);
+
+          var thisDropdown = response.services[i].name.split('/')[1].split('_').join(' ');
+          dropdownContent.push(thisDropdown);
+          var elLeft = document.createElement("option");
+          elLeft.textContent = thisDropdown;
+          elLeft.value = thisLayerString;
+          dropdownLeft.appendChild(elLeft);
+          var elRight = document.createElement("option");
+          elRight.textContent = thisDropdown;
+          elRight.value = thisLayerString;
+          dropdownRight.appendChild(elRight);
+          //configure the path name to this service, using the base URL, this Map Name, and /MapServer
+          thisLayerName = L.esri.tiledMapLayer({
+            url: baseURL.concat('/', thisLayerString, '/MapServer'),
+            maxZoom: 21
+          });
+          //set default layer if this service matches the assigned default on left map
+          if (thisLayerString == defaultLeftLayer) {
+            leftLayer = thisLayerName;
+            mapLeft.addLayer(leftLayer);
+            elLeft.selected = true;
+          }
+          //set default layer if this service matches the assigned default on right map
+          if (thisLayerString == defaultRightLayer) {
+            rightLayer = thisLayerName;
+            mapRight.addLayer(rightLayer);
+            elRight.selected = true;
+          }
+          console.log(thisLayerString);
+      }
     }
   });
 
@@ -120,17 +110,30 @@
     crosshairR = new L.marker(mapRight.getCenter(), { icon: crosshairIcon, clickable: false });
     crosshairR.addTo(mapRight);
 
+//FUNCTION check to see if service name needs to be renamed on dropdown on map1
+function renameItem (layer) {
+  var found = false;
+  var renameCounter = 0;
+  while (found === false) {
+    if (renameArray[0][0] === layer) {
+
+    }
+  }
+
+  return layer;
+}
+
+//FUNCTION to change basemap on dropdown change. Pass in basemap from dropdown and if it was left or right dropdown
     function setBasemap(basemap, mapSide) {
         if (mapSide === "basemapsLeft") {
+          //remove previous layer
             mapLeft.removeLayer(leftLayer);
-            if (basemap === 'Streets') {
-                leftLayer = L.esri.basemapLayer(basemap);
-            } else {
-                leftLayer = L.esri.tiledMapLayer({
-                  url: baseURL.concat('/', basemap, '/MapServer'),
-                  maxZoom: 21
-                });
-            }
+            //create new layer
+            leftLayer = L.esri.tiledMapLayer({
+              url: baseURL.concat('/', basemap, '/MapServer'),
+              maxZoom: 21
+            });
+            //add new layer
             mapLeft.addLayer(leftLayer);
         } else if (mapSide === "basemapsRight") {
             mapRight.removeLayer(rightLayer);
@@ -156,24 +159,14 @@
       } else {
           document.getElementById("basemapsRight").focus();
       }
-
         var basemap = basemaps.value;
         setBasemap(basemap, whichMap);
   }
 
     mapLeft.sync(mapRight);
     mapRight.sync(mapLeft);
-  //  mapLeft.on('zoomend', function () {
-  //      console.log(mapLeft.getZoom());
-  //  });
 
-    // Move the crosshair to the center of the map when the user pans
-    mapLeft.on('move', function (e) {
-        crosshairL.setLatLng(mapLeft.getCenter());
-        crosshairR.setLatLng(mapRight.getCenter());
-        document.getElementById("basemapsRight").focus();
-    });
-    // Move the crosshair to the center of the map when the user pans
+    // Move the crosshair to the center of the map when the user pans. Only need to use mapRight since moving one moves both maps
     mapRight.on('move', function (e) {
         crosshairR.setLatLng(mapRight.getCenter());
         crosshairL.setLatLng(mapLeft.getCenter());
@@ -181,6 +174,5 @@
     });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sidr/2.2.1/jquery.sidr.min.js"></script>
 </body>
 </html>

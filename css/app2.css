@@ -21,13 +21,6 @@
     margin-bottom: 5px;
   }
 
-@media (max-width: 768px) {
-    #map1, #map2 {
-        top: 50px;
-        height: calc(100% - 50px);
-    }
-}
-
   @media (max-width: 1024px) and (min-width: 769px) {
     #map1, #map2 {
       top: 165px;
