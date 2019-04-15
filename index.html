@@ -7,7 +7,7 @@
 
   <!-- Load Leaflet from CDN-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/app2.css" />
+  <link rel="stylesheet" href="css/app.css" />
   <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet-src.js"></script>
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.1.3"></script>
@@ -53,8 +53,6 @@
   var defaultRightLayer = configFile.defaultRight;
   var renameArray = configFile.rename;
   var excludeArray = configFile.exclude;
-  console.log(renameArray);
-  console.log(excludeArray);
 
 // Query arcgis rest endpoint and populate the dropdowns with different datasets from the service
   L.esri.get(baseURL, {},
@@ -68,38 +66,38 @@
         var dropdownRight = document.getElementById("basemapsRight");
         //for to process all layers on service endpoint and push to dropdown lists
         for (i=0; i<response.services.length;  i++) {
-        //  console.log(response.services[i]);
-        //  console.log(response.services[i].name.split('/')[1]);
-        //  var thisLayerString = renameItem(response.services[i].name.split('/')[1]);
-
-          var thisDropdown = response.services[i].name.split('/')[1].split('_').join(' ');
-          dropdownContent.push(thisDropdown);
-          var elLeft = document.createElement("option");
-          elLeft.textContent = thisDropdown;
-          elLeft.value = thisLayerString;
-          dropdownLeft.appendChild(elLeft);
-          var elRight = document.createElement("option");
-          elRight.textContent = thisDropdown;
-          elRight.value = thisLayerString;
-          dropdownRight.appendChild(elRight);
-          //configure the path name to this service, using the base URL, this Map Name, and /MapServer
-          thisLayerName = L.esri.tiledMapLayer({
-            url: baseURL.concat('/', thisLayerString, '/MapServer'),
-            maxZoom: 21
-          });
-          //set default layer if this service matches the assigned default on left map
-          if (thisLayerString == defaultLeftLayer) {
-            leftLayer = thisLayerName;
-            mapLeft.addLayer(leftLayer);
-            elLeft.selected = true;
+          var thisTileLayer = response.services[i].name.split('/')[1]
+          //if this tile layer is not in the excludes list, then process
+        // removed due to IE error for line below if (excludeArray.includes(thisTileLayer) == false) {
+        if (excludeArray.indexOf(thisTileLayer) == -1) {
+            var thisLayerString = renameItem(thisTileLayer);
+            dropdownContent.push(thisLayerString);
+            var elLeft = document.createElement("option");
+            elLeft.textContent = thisLayerString;
+            elLeft.value = thisLayerString;
+            dropdownLeft.appendChild(elLeft);
+            var elRight = document.createElement("option");
+            elRight.textContent = thisLayerString;
+            elRight.value = thisLayerString;
+            dropdownRight.appendChild(elRight);
+            //configure the path name to this service, using the base URL, this Map Name, and /MapServer
+            thisLayerName = L.esri.tiledMapLayer({
+              url: baseURL.concat('/', thisTileLayer, '/MapServer'),
+              maxZoom: 21
+            });
+            //set default layer if this service matches the assigned default on left map
+            if (renameBackToOfficialServiceName(thisLayerString) == defaultLeftLayer) {
+              leftLayer = thisLayerName;
+              mapLeft.addLayer(leftLayer);
+              elLeft.selected = true;
+            }
+            //set default layer if this service matches the assigned default on right map
+            if (renameBackToOfficialServiceName(thisLayerString) == defaultRightLayer) {
+              rightLayer = thisLayerName;
+              mapRight.addLayer(rightLayer);
+              elRight.selected = true;
+            }
           }
-          //set default layer if this service matches the assigned default on right map
-          if (thisLayerString == defaultRightLayer) {
-            rightLayer = thisLayerName;
-            mapRight.addLayer(rightLayer);
-            elRight.selected = true;
-          }
-          console.log(thisLayerString);
       }
     }
   });
@@ -110,17 +108,38 @@
     crosshairR = new L.marker(mapRight.getCenter(), { icon: crosshairIcon, clickable: false });
     crosshairR.addTo(mapRight);
 
-//FUNCTION check to see if service name needs to be renamed on dropdown on map1
+//FUNCTION check to see if service name needs to be renamed on to a more user friendly dropdown Name, checking renameArray
 function renameItem (layer) {
   var found = false;
   var renameCounter = 0;
   while (found === false) {
-    if (renameArray[0][0] === layer) {
-
+    if (renameArray[renameCounter][0] === layer) {
+      found = true;
+      return renameArray[renameCounter][1];
+    } else {
+      renameCounter += 1;
+    }
+    if (renameCounter === renameArray.length) {
+      return layer;
     }
   }
+}
 
-  return layer;
+//FUNCTION when switching on the dropdown, need to convert the userfriendly name from the dropdown back to the original service name shown in postition 0 in renameArray
+function renameBackToOfficialServiceName (layer) {
+  var found = false;
+  var renameCounter = 0;
+  while (found === false) {
+    if (renameArray[renameCounter][1] === layer) {
+      found = true;
+      return renameArray[renameCounter][0];
+    } else {
+      renameCounter += 1;
+    }
+    if (renameCounter === renameArray.length) {
+      return layer;
+    }
+  }
 }
 
 //FUNCTION to change basemap on dropdown change. Pass in basemap from dropdown and if it was left or right dropdown
@@ -130,7 +149,7 @@ function renameItem (layer) {
             mapLeft.removeLayer(leftLayer);
             //create new layer
             leftLayer = L.esri.tiledMapLayer({
-              url: baseURL.concat('/', basemap, '/MapServer'),
+              url: baseURL.concat('/', renameBackToOfficialServiceName(basemap), '/MapServer'),
               maxZoom: 21
             });
             //add new layer
@@ -141,7 +160,7 @@ function renameItem (layer) {
                 rightLayer = L.esri.basemapLayer(basemap);
             } else {
                 rightLayer = L.esri.tiledMapLayer({
-                  url: baseURL.concat('/', basemap, '/MapServer'),
+                  url: baseURL.concat('/', renameBackToOfficialServiceName(basemap), '/MapServer'),
                   maxZoom: 21
                 });
             }

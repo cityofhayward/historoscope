@@ -1,0 +1,49 @@
+body { margin:0; padding:0; }
+
+body, html {height: 100%;}
+
+#map1, #map2 {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+  #basemaps {
+    margin-bottom: 5px;
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #map1, #map2 {
+      top: 165px;
+      height: calc(100% - 165px);
+    }
+  }
+
+@media (min-width: 501px) {
+  #basemapsLeft, #basemapsRight {
+    position: relative;
+    top: 10px;
+    left: 50px;
+    z-index: 4000;
+    padding: 10px;
+  }
+
+}
+
+@media (max-width: 500px) {
+    #basemaps-left-wrapper, #basemaps-right-wrapper {
+        position: absolute;
+        top: auto;
+        left: 15px;
+        bottom: 25px;
+    }
+
+    #basemapsLeft, #basemapsRight{
+        width: 90%;
+        position: absolute;
+        bottom: 30px;
+        left: 10px;
+        z-index: 4000;
+        padding: 10px;
+    }
+}
