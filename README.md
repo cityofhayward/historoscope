@@ -43,6 +43,7 @@ There is one config.js file where all settings reside.
 * Set the starting layer for the left and right viewers: replaced variables defaultLeft and defaultRight with one of the services names. Example: from Ext_Basemaps/Aerial_Imagery_1954 (MapServer), use Aerial_Imagery_1954, so it looks like defaultLeft: Aerial_Imagery_1954.
 * Rename services as needed: If your service names are not particularly user-friendly, rename theme
 * Exclude services as needed: Imagery layers that aren't needed can be removed by listing their names in exclude
+3) Edit initial location of map in index.html, ```var mapLeft = L.map('map1').setView([37.67, -122.09], 15)```
 
 ### Uses ###
 
