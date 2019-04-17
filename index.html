@@ -30,7 +30,9 @@
 </div>
 
 <script>
-    var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
+console.log(configFile.mapCoords[0]);
+    //var mapLeft = L.map('map1').setView([37.67, -122.09], 15);
+  var mapLeft = L.map('map1').setView([configFile.mapCoords[0], configFile.mapCoords[1]], 15);
 
     // create an empty layer group to store the results and add it to the map
     var results = L.layerGroup().addTo(mapLeft);

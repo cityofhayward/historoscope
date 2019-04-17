@@ -35,5 +35,9 @@ var configFile = {
     "UAV_HARDShoreline_KingTide_20180102",
     "UAV_HARDShoreline_LowTide_20180305",
     "COH_Dark_Gray"
+  ],
+
+  mapCoords: [
+    37.67, -122.09
   ]
 }
